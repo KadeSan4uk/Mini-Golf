@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "babc2fce-8359-4e10-b840-e428e2acef2e",
+            "actions": [
+                {
+                    "name": "SpaceBar",
+                    "type": "Button",
+                    "id": "2b5d1a87-5cdd-4870-aff9-cc46bf1ba986",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dae83e0e-f5a0-44b8-be5a-07a90c49aea0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpaceBar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
