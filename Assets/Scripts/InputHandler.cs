@@ -1,15 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class InputHandler : MonoBehaviour
 {
     private PlayerInputActions _inputActions;
 
-    public delegate void ChargeStartEventHandler();
-    public delegate void ChargeEndEventHandler();
-
-    public event ChargeStartEventHandler OnChargeStart;
-    public event ChargeEndEventHandler OnChargeEnd;
+    public event Action OnChargeStart;
+    public event Action OnChargeEnd;
 
     private void Awake()
     {
@@ -20,8 +18,8 @@ public class InputHandler : MonoBehaviour
     {
         _inputActions.Enable();
 
-        _inputActions.Player.SpaceBar.started += ctx => OnChargeStart?.Invoke(); 
-        _inputActions.Player.SpaceBar.canceled += ctx => OnChargeEnd?.Invoke(); 
+        _inputActions.Player.SpaceBar.started += ctx => OnChargeStart?.Invoke();
+        _inputActions.Player.SpaceBar.canceled += ctx => OnChargeEnd?.Invoke();
     }
 
     private void OnDisable()
