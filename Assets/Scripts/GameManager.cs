@@ -6,16 +6,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BallController _ballController;
     [SerializeField] private InputHandler _inputHandler;
     [SerializeField] private TextMeshProUGUI _ScoreUI;
-
+    [SerializeField] private HoleCollider _holeCollider;
 
     private int _score = -15;
 
     private void OnEnable()
     {
-        if (_ballController != null && _inputHandler != null)
+        if (_inputHandler != null && _ballController != null)
         {
             _inputHandler.OnChargeStart += _ballController.StartCharging;
             _inputHandler.OnChargeEnd += _ballController.ReleaseCharging;
+        }
+
+        if (_holeCollider != null)
+        {
+            _holeCollider.OnBallInHole += RegisterHit;
+        }
+
+        if (_ballController != null)
+        {
+            _ballController.OnBallStopped += HandleBallStopped; 
         }
     }
 
@@ -26,7 +36,18 @@ public class GameManager : MonoBehaviour
             _inputHandler.OnChargeStart -= _ballController.StartCharging;
             _inputHandler.OnChargeEnd -= _ballController.ReleaseCharging;
         }
+
+        if (_holeCollider != null)
+        {
+            _holeCollider.OnBallInHole -= RegisterHit;
+        }
+
+        if (_ballController != null)
+        {
+            _ballController.OnBallStopped -= HandleBallStopped; 
+        }
     }
+
     private void Update()
     {
         CheckOnScore();
@@ -34,9 +55,9 @@ public class GameManager : MonoBehaviour
 
     private void CheckOnScore()
     {
-        _ScoreUI.text = "Score:" + _score.ToString();
-
+        _ScoreUI.text = "Score: " + _score.ToString();
     }
+
     public void RegisterHit(bool success)
     {
         if (!success)
@@ -50,8 +71,16 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            _score -= 5;
+            CheckOnScore();
             Debug.Log("Goal!");
         }
     }
 
+    private void HandleBallStopped()
+    {
+        Debug.Log("Ball stopped but did not reach the hole.");
+        _score += 5;
+        CheckOnScore();
+    }
 }

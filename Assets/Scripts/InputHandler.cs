@@ -24,6 +24,12 @@ public class InputHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _inputActions.Disable();
+        if (_inputActions != null)
+        {
+            _inputActions.Player.SpaceBar.started -= ctx => OnChargeStart?.Invoke();
+            _inputActions.Player.SpaceBar.canceled -= ctx => OnChargeEnd?.Invoke();
+            _inputActions.Disable();
+        }
     }
+
 }
